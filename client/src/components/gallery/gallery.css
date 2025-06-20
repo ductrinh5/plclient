@@ -1,0 +1,131 @@
+.gallery-container {
+  margin: 32px;
+}
+
+/* .gallery {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+} */
+
+.gallery-masonry {
+  display: flex;
+  margin-left: -16px; /* gutter size offset */
+  width: auto;
+  margin-bottom: 24px;
+}
+
+.gallery-masonry-column {
+  padding-left: 16px; /* gutter size */
+  background-clip: padding-box;
+}
+
+.gallery-masonry-column > .galleryItem {
+  margin-bottom: 16px;
+}
+
+/* Responsive columns for react-masonry-css */
+@media (max-width: 1520px) {
+  .gallery-masonry {
+    /* columns handled by JS */
+  }
+}
+
+@media (max-width: 1000px) {
+  .gallery-masonry {
+    /* columns handled by JS */
+  }
+}
+
+@media (max-width: 800px) {
+  .gallery-masonry {
+    /* columns handled by JS */
+  }
+}
+
+@media (max-width: 600px) {
+  .gallery-masonry {
+    /* columns handled by JS */
+  }
+  .gallery-container {
+    margin: 16px;
+  }
+}
+
+/* Keep .galleryItem block for masonry */
+.galleryItem {
+  display: block;
+}
+
+.page-size-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.page-size-control select {
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.pagination-controls button {
+  padding: 8px 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: white;
+  cursor: pointer;
+}
+
+.pagination-controls button:disabled {
+  background-color: #f5f5f5;
+  cursor: not-allowed;
+  color: #999;
+}
+
+.pagination-controls button:not(:disabled):hover {
+  background-color: #f0f0f0;
+}
+
+.page-info {
+  font-size: 14px;
+  color: #666;
+}
+
+.gallery-spinner {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  margin: 24px 0 8px 0;
+}
+.gallery-spinner .dot1, .gallery-spinner .dot2, .gallery-spinner .dot3 {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #08e577;
+  animation: homepage-dot-bounce 1.2s infinite ease-in-out both;
+}
+.gallery-spinner .dot2 {
+  animation-delay: 0.2s;
+}
+.gallery-spinner .dot3 {
+  animation-delay: 0.4s;
+}
+
+/* Remove pagination-controls and page-size-control if not used */
+.page-size-control, .pagination-controls { display: none; }
+
+@keyframes homepage-dot-bounce {
+  0%, 80%, 100% { transform: scale(0.7); opacity: 0.6; }
+  40% { transform: scale(1.2); opacity: 1; }
+}
