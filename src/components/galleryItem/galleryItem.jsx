@@ -46,7 +46,7 @@ const GalleryItem = ({ item, onDelete }) => {
     setIsDeleting(true);
     try {
       const res = await fetch(
-        `http://plserver.onrender.com/api?id=${item.id}`,
+        `https://plserver.onrender.com/api?id=${item.id}`,
         {
           method: "DELETE",
         }

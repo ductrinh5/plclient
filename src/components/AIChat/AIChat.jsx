@@ -56,7 +56,7 @@ const AIChat = ({ plant }) => {
     setInput("");
     setLoading(true);
     try {
-      const res = await fetch("http://plserver.onrender.com/api/openai-chat", {
+      const res = await fetch("https://plserver.onrender.com/api/openai-chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ question: input, plant }),

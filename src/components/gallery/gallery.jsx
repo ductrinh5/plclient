@@ -15,7 +15,7 @@ const Gallery = ({ search, selectedApplications, selectedRegions }) => {
     setPlants([]);
     setOriginalPlants([]);
     setLoading(true);
-    let url = `http://plserver.onrender.com/api?page=1&pageSize=1000`;
+    let url = `https://plserver.onrender.com/api?page=1&pageSize=1000`;
     if (selectedApplications?.length > 0) {
       url += `&applications=${selectedApplications.join(",")}`;
     }

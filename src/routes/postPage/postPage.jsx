@@ -86,7 +86,7 @@ const PostPage = () => {
 
   const [plant, setPlant] = useState(null);
   useEffect(() => {
-    fetch(`http://plserver.onrender.com/api?id=${id}`)
+    fetch(`https://plserver.onrender.com/api?id=${id}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.plants.length > 0) {

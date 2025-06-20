@@ -57,7 +57,7 @@ const EditPage = () => {
   useEffect(() => {
     const fetchPlant = async () => {
       try {
-        const response = await fetch(`http://plserver.onrender.com/api/${id}`);
+        const response = await fetch(`https://plserver.onrender.com/api/${id}`);
         if (!response.ok) throw new Error("Failed to fetch plant data");
 
         const data = await response.json();
@@ -122,8 +122,8 @@ const EditPage = () => {
       // If a new file was uploaded, use its name for both model and thumbnail
       if (file) {
         const filename = file.name;
-        modelPath = `http://plserver.onrender.com/models/${filename}`;
-        thumbnailPath = `http://plserver.onrender.com/thumbnails/${filename.replace(
+        modelPath = `https://plserver.onrender.com/models/${filename}`;
+        thumbnailPath = `https://plserver.onrender.com/thumbnails/${filename.replace(
           ".glb",
           ""
         )}.png`;
@@ -133,7 +133,7 @@ const EditPage = () => {
         data.append("file", file);
         data.append("filename", filename);
 
-        const uploadRes = await fetch("http://plserver.onrender.com/upload", {
+        const uploadRes = await fetch("https://plserver.onrender.com/upload", {
           method: "POST",
           body: data,
         });
@@ -144,7 +144,7 @@ const EditPage = () => {
       } else {
         // If no new file, use the existing model filename for the thumbnail
         const existingFilename = modelPath.split("/").pop();
-        thumbnailPath = `http://plserver.onrender.com/thumbnails/${existingFilename.replace(
+        thumbnailPath = `https://plserver.onrender.com/thumbnails/${existingFilename.replace(
           ".glb",
           ""
         )}.png`;
@@ -152,7 +152,7 @@ const EditPage = () => {
 
       // Always save the current canvas as thumbnail
       const thumbnailRes = await fetch(
-        "http://plserver.onrender.com/api/save-thumbnail",
+        "https://plserver.onrender.com/api/save-thumbnail",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -168,7 +168,7 @@ const EditPage = () => {
       }
 
       // Update plant data
-      const updateRes = await fetch(`http://plserver.onrender.com/api/${id}`, {
+      const updateRes = await fetch(`https://plserver.onrender.com/api/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

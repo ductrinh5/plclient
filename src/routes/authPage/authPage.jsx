@@ -18,7 +18,7 @@ const AuthPage = () => {
     e.preventDefault();
     setError("");
 
-    const res = await fetch("http://plserver.onrender.com/api/login", {
+    const res = await fetch("https://plserver.onrender.com/api/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(credentials),
