@@ -96,6 +96,7 @@ const PostPage = () => {
       .catch((err) => console.error("Lỗi khi tải dữ liệu:", err));
   }, [id]);
 
+  if (!plant) return <div></div>;
 
   return (
     <div className="postPage">
