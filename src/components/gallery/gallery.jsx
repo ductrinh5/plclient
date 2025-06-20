@@ -15,12 +15,12 @@ const Gallery = ({ search, selectedApplications, selectedRegions }) => {
     setPlants([]);
     setOriginalPlants([]);
     setLoading(true);
-    let url = `http://localhost:3000/api?page=1&pageSize=1000`;
+    let url = `http://plserver.onrender.com/api?page=1&pageSize=1000`;
     if (selectedApplications?.length > 0) {
-      url += `&applications=${selectedApplications.join(',')}`;
+      url += `&applications=${selectedApplications.join(",")}`;
     }
     if (selectedRegions?.length > 0) {
-      url += `&regions=${selectedRegions.join(',')}`;
+      url += `&regions=${selectedRegions.join(",")}`;
     }
     if (search) {
       url += `&search=${encodeURIComponent(search)}`;
@@ -38,16 +38,19 @@ const Gallery = ({ search, selectedApplications, selectedRegions }) => {
   }, [selectedApplications, selectedRegions, search]);
 
   // Intersection Observer for endless loop
-  const handleObserver = useCallback((entries) => {
-    const target = entries[0];
-    if (target.isIntersecting && !loading && originalPlants.length > 0) {
-      setLoading(true);
-      setTimeout(() => {
-        setPlants(prev => [...prev, ...originalPlants]);
-        setLoading(false);
-      }, 300); // Small delay for UX
-    }
-  }, [loading, originalPlants]);
+  const handleObserver = useCallback(
+    (entries) => {
+      const target = entries[0];
+      if (target.isIntersecting && !loading && originalPlants.length > 0) {
+        setLoading(true);
+        setTimeout(() => {
+          setPlants((prev) => [...prev, ...originalPlants]);
+          setLoading(false);
+        }, 300); // Small delay for UX
+      }
+    },
+    [loading, originalPlants]
+  );
 
   useEffect(() => {
     const option = { root: null, rootMargin: "0px", threshold: 0.1 };
@@ -64,7 +67,7 @@ const Gallery = ({ search, selectedApplications, selectedRegions }) => {
     1520: 4,
     1000: 3,
     800: 2,
-    600: 1
+    600: 1,
   };
 
   return (
@@ -76,10 +79,22 @@ const Gallery = ({ search, selectedApplications, selectedRegions }) => {
         columnClassName="gallery-masonry-column"
       >
         {plants.map((plant, idx) => (
-          <GalleryItem key={plant.id + '-' + idx} item={plant} onDelete={() => {}} />
+          <GalleryItem
+            key={plant.id + "-" + idx}
+            item={plant}
+            onDelete={() => {}}
+          />
         ))}
       </Masonry>
-      <div ref={loaderRef} style={{ minHeight: 40, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+      <div
+        ref={loaderRef}
+        style={{
+          minHeight: 40,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
         {loading && (
           <div className="gallery-spinner">
             <div className="dot1"></div>

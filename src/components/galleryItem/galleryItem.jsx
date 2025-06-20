@@ -24,13 +24,18 @@ const GalleryItem = ({ item, onDelete }) => {
   const [isDeleting, setIsDeleting] = useState(false);
 
   // Stable random height class per item
-  const heightClasses = ["galleryItem-tall", "galleryItem-medium", "galleryItem-short"];
+  const heightClasses = [
+    "galleryItem-tall",
+    "galleryItem-medium",
+    "galleryItem-short",
+  ];
   const randomClass = useMemo(() => {
     // Use item.id for stable randomness
     if (!item.id) return heightClasses[0];
-    const idx = Math.abs(
-      Array.from(String(item.id)).reduce((acc, c) => acc + c.charCodeAt(0), 0)
-    ) % heightClasses.length;
+    const idx =
+      Math.abs(
+        Array.from(String(item.id)).reduce((acc, c) => acc + c.charCodeAt(0), 0)
+      ) % heightClasses.length;
     return heightClasses[idx];
   }, [item.id]);
 
@@ -40,9 +45,12 @@ const GalleryItem = ({ item, onDelete }) => {
 
     setIsDeleting(true);
     try {
-      const res = await fetch(`http://localhost:3000/api?id=${item.id}`, {
-        method: "DELETE",
-      });
+      const res = await fetch(
+        `http://plserver.onrender.com/api?id=${item.id}`,
+        {
+          method: "DELETE",
+        }
+      );
 
       if (!res.ok) throw new Error("Delete failed");
 

@@ -79,8 +79,8 @@ const CreatePage = () => {
     try {
       if (!file) return alert("Please upload a .glb file");
       const filename = file.name;
-      const modelPath = `http://localhost:3000/models/${filename}`;
-      const thumbnailPath = `http://localhost:3000/thumbnails/${filename}`;
+      const modelPath = `http://plserver.onrender.com/models/${filename}`;
+      const thumbnailPath = `http://plserver.onrender.com/thumbnails/${filename}`;
 
       const canvas = canvasRef.current?.querySelector("canvas");
 
@@ -92,11 +92,11 @@ const CreatePage = () => {
       data.append("filename", filename);
 
       const [uploadRes, thumbnailRes, saveRes] = await Promise.all([
-        fetch("http://localhost:3000/upload", {
+        fetch("http://plserver.onrender.com/upload", {
           method: "POST",
           body: data,
         }),
-        fetch("http://localhost:3000/api/save-thumbnail", {
+        fetch("http://plserver.onrender.com/api/save-thumbnail", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -104,7 +104,7 @@ const CreatePage = () => {
             filename: `${filename.replace(".glb", "")}.png`,
           }),
         }),
-        fetch("http://localhost:3000/api", {
+        fetch("http://plserver.onrender.com/api", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({

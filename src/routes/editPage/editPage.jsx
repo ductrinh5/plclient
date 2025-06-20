@@ -57,9 +57,9 @@ const EditPage = () => {
   useEffect(() => {
     const fetchPlant = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/api/${id}`);
-        if (!response.ok) throw new Error('Failed to fetch plant data');
-        
+        const response = await fetch(`http://plserver.onrender.com/api/${id}`);
+        if (!response.ok) throw new Error("Failed to fetch plant data");
+
         const data = await response.json();
         setFormData({
           name: data.name || "",
@@ -71,13 +71,12 @@ const EditPage = () => {
           history: data.history || "",
           value: data.value || "",
         });
-        
+
         if (data.model) {
           setFileUrl(data.model);
         }
-        
       } catch (error) {
-        console.error('Error fetching plant:', error);
+        console.error("Error fetching plant:", error);
         setToast({ message: "❌ Failed to load plant data!", type: "error" });
       } finally {
         setIsLoading(false);
@@ -123,15 +122,18 @@ const EditPage = () => {
       // If a new file was uploaded, use its name for both model and thumbnail
       if (file) {
         const filename = file.name;
-        modelPath = `http://localhost:3000/models/${filename}`;
-        thumbnailPath = `http://localhost:3000/thumbnails/${filename.replace(".glb", "")}.png`;
+        modelPath = `http://plserver.onrender.com/models/${filename}`;
+        thumbnailPath = `http://plserver.onrender.com/thumbnails/${filename.replace(
+          ".glb",
+          ""
+        )}.png`;
 
         // Upload model file
         const data = new FormData();
         data.append("file", file);
         data.append("filename", filename);
 
-        const uploadRes = await fetch("http://localhost:3000/upload", {
+        const uploadRes = await fetch("http://plserver.onrender.com/upload", {
           method: "POST",
           body: data,
         });
@@ -141,26 +143,32 @@ const EditPage = () => {
         }
       } else {
         // If no new file, use the existing model filename for the thumbnail
-        const existingFilename = modelPath.split('/').pop();
-        thumbnailPath = `http://localhost:3000/thumbnails/${existingFilename.replace(".glb", "")}.png`;
+        const existingFilename = modelPath.split("/").pop();
+        thumbnailPath = `http://plserver.onrender.com/thumbnails/${existingFilename.replace(
+          ".glb",
+          ""
+        )}.png`;
       }
 
       // Always save the current canvas as thumbnail
-      const thumbnailRes = await fetch("http://localhost:3000/api/save-thumbnail", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          dataUrl: dataURL,
-          filename: thumbnailPath.split('/').pop(),
-        }),
-      });
+      const thumbnailRes = await fetch(
+        "http://plserver.onrender.com/api/save-thumbnail",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            dataUrl: dataURL,
+            filename: thumbnailPath.split("/").pop(),
+          }),
+        }
+      );
 
       if (!thumbnailRes.ok) {
         throw new Error("Failed to save thumbnail");
       }
 
       // Update plant data
-      const updateRes = await fetch(`http://localhost:3000/api/${id}`, {
+      const updateRes = await fetch(`http://plserver.onrender.com/api/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -217,7 +225,9 @@ const EditPage = () => {
                 hidden
                 onChange={handleFileChange}
               />
-              <div className="uploadInfo">Click to upload a new 3D model (optional)</div>
+              <div className="uploadInfo">
+                Click to upload a new 3D model (optional)
+              </div>
             </>
           )}
           {fileUrl && (
@@ -248,17 +258,17 @@ const EditPage = () => {
             <div className="createFormItem" key={key}>
               <label>{label}</label>
               {type === "textarea" ? (
-                <textarea 
-                  rows={4} 
-                  name={key} 
-                  value={formData[key]} 
-                  onChange={handleInput} 
+                <textarea
+                  rows={4}
+                  name={key}
+                  value={formData[key]}
+                  onChange={handleInput}
                 />
               ) : type === "select" ? (
-                <select 
-                  multiple 
-                  name={key} 
-                  value={formData[key]} 
+                <select
+                  multiple
+                  name={key}
+                  value={formData[key]}
                   onChange={handleInput}
                 >
                   <option value="Thế giới">Thế giới</option>
@@ -269,11 +279,11 @@ const EditPage = () => {
                   <option value="Châu Úc">Châu Úc</option>
                 </select>
               ) : (
-                <input 
-                  type="text" 
-                  name={key} 
-                  value={formData[key]} 
-                  onChange={handleInput} 
+                <input
+                  type="text"
+                  name={key}
+                  value={formData[key]}
+                  onChange={handleInput}
                 />
               )}
             </div>
@@ -281,10 +291,10 @@ const EditPage = () => {
 
           <div className="createFormItem">
             <label>Application</label>
-            <select 
-              multiple 
-              name="application" 
-              value={formData.application} 
+            <select
+              multiple
+              name="application"
+              value={formData.application}
               onChange={handleInput}
             >
               <option value="Thực phẩm">Thực phẩm</option>
@@ -301,4 +311,4 @@ const EditPage = () => {
   );
 };
 
-export default EditPage; 
+export default EditPage;

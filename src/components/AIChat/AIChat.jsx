@@ -5,10 +5,17 @@ function renderAIMessage(text) {
   // Split by lines for heading detection
   return text.split(/\n/).map((line, idx) => {
     // Heading: ### Title
-    if (line.trim().startsWith('###')) {
+    if (line.trim().startsWith("###")) {
       return (
-        <div key={idx} style={{ fontSize: '1.25em', fontWeight: 700, margin: '12px 0 4px 0' }}>
-          {line.replace(/^###\s*/, '')}
+        <div
+          key={idx}
+          style={{
+            fontSize: "1.25em",
+            fontWeight: 700,
+            margin: "12px 0 4px 0",
+          }}
+        >
+          {line.replace(/^###\s*/, "")}
         </div>
       );
     }
@@ -49,7 +56,7 @@ const AIChat = ({ plant }) => {
     setInput("");
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:3000/api/openai-chat", {
+      const res = await fetch("http://plserver.onrender.com/api/openai-chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ question: input, plant }),
@@ -99,13 +106,17 @@ const AIChat = ({ plant }) => {
           data-state={activeTab === "chat" ? "active" : "inactive"}
         >
           <div className="chat-history">
-            {chat.length === 0 && <div className="empty-chat">Hãy hỏi AI về cây này!</div>}
+            {chat.length === 0 && (
+              <div className="empty-chat">Hãy hỏi AI về cây này!</div>
+            )}
             {chat.map((msg, idx) => (
-              <div key={idx} className={`chat-msg ${msg.sender}`}>{
-                msg.sender === 'ai' ? renderAIMessage(msg.text) : msg.text
-              }</div>
+              <div key={idx} className={`chat-msg ${msg.sender}`}>
+                {msg.sender === "ai" ? renderAIMessage(msg.text) : msg.text}
+              </div>
             ))}
-            {loading && <div className="chat-msg ai loading">Đang trả lời...</div>}
+            {loading && (
+              <div className="chat-msg ai loading">Đang trả lời...</div>
+            )}
             <div ref={chatEndRef} />
           </div>
           <form className="AIChatForm" onSubmit={handleSend}>
@@ -113,7 +124,7 @@ const AIChat = ({ plant }) => {
               type="text"
               placeholder="Hỏi bất cứ điều gì"
               value={input}
-              onChange={e => setInput(e.target.value)}
+              onChange={(e) => setInput(e.target.value)}
               ref={inputRef}
               disabled={loading}
             />
