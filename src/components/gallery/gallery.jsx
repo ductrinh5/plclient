@@ -41,7 +41,8 @@ const Gallery = ({ search, selectedApplications, selectedRegions }) => {
   const handleObserver = useCallback(
     (entries) => {
       const target = entries[0];
-      if (target.isIntersecting && !loading && originalPlants.length > 0) {
+      // Disable endless loop when searching
+      if (target.isIntersecting && !loading && originalPlants.length > 0 && !search) {
         setLoading(true);
         setTimeout(() => {
           setPlants((prev) => [...prev, ...originalPlants]);
@@ -49,7 +50,7 @@ const Gallery = ({ search, selectedApplications, selectedRegions }) => {
         }, 300); // Small delay for UX
       }
     },
-    [loading, originalPlants]
+    [loading, originalPlants, search]
   );
 
   useEffect(() => {

@@ -36,7 +36,7 @@ const AuthPage = () => {
   return (
     <div className="authPage">
       <div className="authContainer">
-        <img src="/general/logo.png" alt="" />
+        <img src="/plant_lib.ico" alt="Plant Library Logo" />
         <h1>Admin</h1>
         <form onSubmit={handleSubmit}>
           <div className="formGroup">
