@@ -49,13 +49,18 @@
   .postContainer {
     flex-direction: column;
     max-height: none;
+    height: 100vh; /* Use full viewport height on mobile */
   }
 
   .postImg {
-    height: 400px; /* Fixed height for mobile */
+    height: 300px; /* Reduced height to give more space to chat */
+    flex-shrink: 0; /* Prevent shrinking */
   }
 
   .postDetails {
     max-width: none;
+    flex: 1; /* Take remaining space */
+    padding: 16px; /* Reduce padding on mobile */
+    min-height: 0; /* Allow shrinking */
   }
 }

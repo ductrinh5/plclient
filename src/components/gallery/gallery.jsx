@@ -41,8 +41,9 @@ const Gallery = ({ search, selectedApplications, selectedRegions }) => {
   const handleObserver = useCallback(
     (entries) => {
       const target = entries[0];
-      // Disable endless loop when searching
-      if (target.isIntersecting && !loading && originalPlants.length > 0 && !search) {
+      // Disable endless loop when searching or filtering
+      const hasFilters = selectedApplications?.length > 0 || selectedRegions?.length > 0;
+      if (target.isIntersecting && !loading && originalPlants.length > 0 && !search && !hasFilters) {
         setLoading(true);
         setTimeout(() => {
           setPlants((prev) => [...prev, ...originalPlants]);
@@ -50,7 +51,7 @@ const Gallery = ({ search, selectedApplications, selectedRegions }) => {
         }, 300); // Small delay for UX
       }
     },
-    [loading, originalPlants, search]
+    [loading, originalPlants, search, selectedApplications, selectedRegions]
   );
 
   useEffect(() => {
